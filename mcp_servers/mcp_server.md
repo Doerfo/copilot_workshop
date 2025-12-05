@@ -158,14 +158,50 @@ The `inputs` array in `mcp.json` lets you **prompt for sensitive values at runti
 | **Figma** | ☁️ Remote | 🔐 Auth | Access Figma files, components, design data | [figma mcp](https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/)
 | **Grafana** | ☁️ Remote | 🔐 Auth | Query dashboards, panels, metrics from Grafana | [grafana mcp](https://github.com/grafana/mcp-grafana)
 
+## MCP Prompts
 
-## Key Takeaways
+MCP servers can provide **predefined prompt templates** in addition to tools. Prompts are reusable templates that standardize common LLM interactions and can be surfaced in the UI as:
 
-1. **MCP is a protocol, not a product** - It standardizes how AI tools communicate with external services
-2. **Servers are modular** - Add/remove capabilities without changing Copilot itself
-3. **Authentication varies** - From public APIs to OAuth flows, each server handles its own auth
-4. **Tools extend AI** - MCP tools give Copilot new abilities (search, CRUD, API calls)
-5. **Context is king** - MCP brings real-time, relevant context into AI responses
+- **Slash commands** (e.g., `/code-review`)
+- **Quick actions** in context menus
+- **Command palette entries**
+
+Unlike tools (which are called automatically by the AI), prompts are **user-controlled** — you explicitly select them to start a guided workflow.
+
+> **Learn more:** [MCP Prompts Concepts](https://modelcontextprotocol.info/docs/concepts/prompts/)
+
+## Configuring Tools & Prompts
+
+You can control which tools and prompts are available from each MCP server in your `mcp.json`:
+
+```jsonc
+{
+    "servers": {
+        "playwright": {
+            "type": "stdio",
+            "command": "npx",
+            "args": ["@playwright/mcp@latest"],
+            "tools": {
+                "browser_click": "disabled",     // Disable specific tool
+                "browser_snapshot": "enabled"    // Explicitly enable tool
+            }
+        }
+    }
+}
+```
+
+### Tool Configuration Options
+
+| Value | Description |
+|-------|-------------|
+| `"enabled"` | Tool is available for Copilot to use |
+| `"disabled"` | Tool is hidden and cannot be called |
+
+### Why Configure Tools?
+
+- 🔒 **Security** — Disable risky tools (e.g., file write, shell execution)
+- 🎯 **Focus** — Limit tools to only what you need for the task
+- ⚡ **Performance** — Fewer tools = faster tool selection by the AI
 
 ## ⚠️ Security & Responsibility
 
@@ -184,7 +220,7 @@ When you add a new MCP server or change its configuration, VS Code will prompt y
 ### Best Practices
 
 | Do ✅ | Don't ❌ |
-|-------|---------|
+|-------|----------|
 | Use official/verified MCP servers | Install random servers from unknown sources |
 | Review server source code on GitHub | Blindly trust servers with sensitive permissions |
 | Use workspace configs for team review | Store secrets directly in mcp.json |
@@ -204,7 +240,16 @@ Depending on the server, they may have access to:
 
 > **Tip:** Prefer remote (http) servers for sensitive operations — they run in isolated cloud environments, not on your machine.
 
+## Key Takeaways
+
+1. **MCP is a protocol, not a product** - It standardizes how AI tools communicate with external services
+2. **Servers are modular** - Add/remove capabilities without changing Copilot itself
+3. **Authentication varies** - From public APIs to OAuth flows, each server handles its own auth
+4. **Tools extend AI** - MCP tools give Copilot new abilities (search, CRUD, API calls)
+5. **Context is king** - MCP brings real-time, relevant context into AI responses
+
 ## Useful Links
 
 - [MCP Server list github repo](https://github.com/modelcontextprotocol/servers)
 - [MCP Servers in VS Code](https://code.visualstudio.com/docs/copilot/customization/mcp-servers)
+- [Extend Coding Agent with MCP](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp)
