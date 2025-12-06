@@ -243,6 +243,8 @@ Organization and enterprise admins can control MCP server access for GitHub Copi
 |---------|----------|--------|
 | **MCP servers in Copilot** | Enterprise/Org → Settings → Copilot → Policies | When **disabled**, completely blocks all GitHub MCP Server access (remote & local) for Copilot editors |
 
+![Org > Settings > Copilot > policies](images/copilot_policies.png)
+
 ![Configure MCP Server Policy](images/configure_mcp_server.png)
 
 - Currently applies to **VS Code** and **Copilot Coding Agent**
