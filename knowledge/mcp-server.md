@@ -68,7 +68,7 @@ flowchart TB
 2. Type **"MCP: Open User Configuration"**
 3. Select the command to open your `mcp.json`
 
-![Open MCP Configuration](../images/open_mcp.png)
+![Open MCP Configuration](./images/open_mcp.png)
 
 **File locations:**
 - **User-level** (global):
@@ -233,6 +233,32 @@ When you add a new MCP server or change its configuration, VS Code will prompt y
 
 - **Reset trust**: Run `MCP: Reset Trust` from the Command Palette to re-prompt for all servers
 
+### Admin Controls for MCP Access (GitHub.com)
+
+Organization and enterprise admins can control MCP server access for GitHub Copilot through multiple policy mechanisms on GitHub.com:
+
+#### 1. MCP Servers in Copilot Policy
+
+| Setting | Location | Effect |
+|---------|----------|--------|
+| **MCP servers in Copilot** | Enterprise/Org → Settings → Copilot → Policies | When **disabled**, completely blocks all GitHub MCP Server access (remote & local) for Copilot editors |
+
+![Configure MCP Server Policy](images/configure_mcp_server.png)
+
+- Currently applies to **VS Code** and **Copilot Coding Agent**
+- Other Copilot editors (Visual Studio, JetBrains, Xcode, Eclipse) still use the legacy "Editor Preview Features" policy
+
+> **Note:** The policy is **disabled by default**. Only applies to Copilot Business/Enterprise subscriptions.
+
+> **Learn more:** [GitHub MCP Server Policies & Governance](https://github.com/github/github-mcp-server/blob/main/docs/policies-and-governance.md)
+
+### Current Limitations
+
+| Limitation | Details |
+|------------|---------|
+| **No single toggle** | No single switch blocks all GitHub MCP traffic. Admins must combine Copilot policy + PAT policies |
+| **No MCP-specific audit logs** | MCP traffic appears as normal API calls. Purpose-built MCP logging is on the roadmap |
+
 ### What MCP Servers Can Access
 
 Depending on the server, they may have access to:
@@ -242,6 +268,23 @@ Depending on the server, they may have access to:
 - 🖥️ **Local processes** — spawn commands, control browsers
 
 > **Tip:** Prefer remote (http) servers for sensitive operations — they run in isolated cloud environments, not on your machine.
+
+### Security Best Practices
+
+#### For Organizations
+
+| Area | Best Practice |
+|------|---------------|
+| **Copilot Policy** | Review MCP server policy settings in Enterprise/Org settings |
+| **Token Management** | Mandate fine-grained PATs, set 90-day max expiration, implement rotation reminders |
+
+#### For Developers
+
+| Area | Best Practice |
+|------|---------------|
+| **Token Choice** | Prefer fine-grained PATs over classic tokens |
+| **Scope Minimization** | Request only required scopes, use repo-specific access over org-wide |
+| **Credential Storage** | Use VS Code's secret storage or platform credential managers, never store tokens in source code |
 
 ## MCP Inspector
 
