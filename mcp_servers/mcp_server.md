@@ -8,8 +8,8 @@ The **Model Context Protocol (MCP)** is an open standard that enables AI assista
 
 ```mermaid
 flowchart TB
-    subgraph User["👤 User (local)"]
-        IDE["VS Code / IDE"]
+    subgraph User["👤 Host (local)"]
+        HOST["VS Code / IDE"]
         MCPClient["MCP Client<br/>(built into Copilot)"]
         Browser["🌐 Local Browser<br/>(Chrome/Firefox)"]
         
@@ -34,7 +34,7 @@ flowchart TB
         JiraAPI["Jira Cloud API"]
     end
 
-    IDE <-->|"Chat/Questions"| Agent
+    HOST <-->|"Chat/Questions"| Agent
     Agent <--> LLM
     Agent <-->|"Tool Calls"| MCPClient
     
@@ -239,6 +239,59 @@ Depending on the server, they may have access to:
 - 🖥️ **Local processes** — spawn commands, control browsers
 
 > **Tip:** Prefer remote (http) servers for sensitive operations — they run in isolated cloud environments, not on your machine.
+
+## MCP Inspector
+
+The [MCP Inspector](https://github.com/modelcontextprotocol/inspector) is an interactive developer tool for testing and debugging MCP servers. It provides a web-based UI to explore tools, resources, prompts, and test server functionality.
+
+### Installation & Basic Usage
+
+The Inspector runs directly through `npx` without requiring installation:
+
+```bash
+npx @modelcontextprotocol/inspector <command>
+```
+
+### Connecting to Remote Servers
+
+The Inspector supports three transport types for connecting to MCP servers:
+
+| Transport | Use Case | Example URL |
+|-----------|----------|-------------|
+| **STDIO** | Local servers (default) | `npx @modelcontextprotocol/server-filesystem` |
+| **SSE** | Remote HTTP servers (Server-Sent Events) | `http://localhost:3000/sse` |
+| **Streamable HTTP** | Remote HTTP servers (newer protocol) | `http://localhost:3000/mcp` |
+
+#### Connecting via SSE or Streamable HTTP
+
+1. Launch the Inspector without arguments:
+   ```bash
+   npx @modelcontextprotocol/inspector
+   ```
+
+2. Open the web UI at `http://localhost:6274`
+
+3. Select the **Transport Type** dropdown and choose:
+   - **SSE** for `/sse` endpoints
+   - **Streamable HTTP** for `/mcp` endpoints
+
+4. Enter the remote server URL in the **URL** field
+
+5. Click **Connect**
+
+#### Direct URL Launch
+
+You can also launch the Inspector with pre-configured settings via URL parameters:
+
+```bash
+# SSE transport
+http://localhost:6274/?transport=sse&serverUrl=http://localhost:8787/sse
+
+# Streamable HTTP transport
+http://localhost:6274/?transport=streamable-http&serverUrl=http://localhost:8787/mcp
+```
+
+> **Learn more:** [MCP Inspector Documentation](https://modelcontextprotocol.io/docs/tools/inspector)
 
 ## Key Takeaways
 
