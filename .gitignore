@@ -1,2 +1,63 @@
 /local-docs/
+
+# .NET build outputs
+bin/
+obj/
+
+# .NET Core
+project.assets.json
+project.packagespec.json
+*.nuget.dgspec.json
+*.nuget.g.props
+*.nuget.g.targets
+
+# Build artifacts
+*.deps.json
+*.runtimeconfig.json
+*.dll
+*.exe
+*.pdb
+
+# Static web assets
+*.staticwebassets.endpoints.json
+staticwebassets.build.json
+staticwebassets.build.endpoints.json
+staticwebassets/
+*.dswa.cache.json
+
+# JetBrains Rider
+.idea/
+*.idea/
+*.sln.iml
+rider.project.model.nuget.info
+rider.project.restore.info
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# User-specific files
+*.user
+*.suo
+
+# ASP.NET files
+*.GeneratedMSBuildEditorConfig.editorconfig
+*.GlobalUsings.g.cs
+*.AssemblyInfo.cs
+*.csproj.FileListAbsolute.txt
+*.csproj.Up2Date
+*.MvcApplicationPartsAssemblyInfo.cs
+
+# Logs
+*.log
+
+# User secrets (contains sensitive data)
+secrets.json
+**/secrets.json
+
+# macOS
 .DS_Store
+
+# Docker
+.dockerignore
+scripts/deploy.secrets
