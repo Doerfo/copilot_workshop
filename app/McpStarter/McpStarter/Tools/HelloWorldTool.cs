@@ -8,7 +8,7 @@ public class HelloWorldTool
 {
     [McpServerTool]
     [Description("Tells the secret message")]
-    public String getSecretMessage()
+    public string GetSecretMessage()
     {
         return "Hello, World with code 8751!";
     } 
