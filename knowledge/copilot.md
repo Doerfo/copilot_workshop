@@ -129,9 +129,16 @@ To integrate GitHub Copilot code review into your GitLab CI/CD pipeline, you'll 
 - Install the GitHub Copilot CLI: `npm install -g @github/copilot`
 
 #### 2. **Authentication**
-- Set up a `GITHUB_TOKEN` environment variable with your GitHub Copilot token
-- Configure a `GITLAB_TOKEN` for posting comments back to merge requests
-- Store these tokens as CI/CD variables (masked and protected)
+- **Generate a Fine-grained Personal Access Token (PAT)**:
+  1. Go to [GitHub Settings > Developer settings > Personal access tokens > Fine-grained tokens](https://github.com/settings/personal-access-tokens/new)
+  2. Click **Generate new token**
+  3. Under **Permissions**, select **Account permissions**
+  4. Select **Copilot Requests** and set to **Read-only** (or Access)
+  5. Generate the token
+- **Configure CI/CD Variables**:
+  - Set `GITHUB_TOKEN` environment variable with your new Fine-grained PAT
+  - Configure a `GITLAB_TOKEN` for posting comments back to merge requests
+  - Store these tokens as CI/CD variables (masked and protected)
 
 #### 3. **Fetch Code Changes**
 - Fetch the target branch to ensure you have the full git history
@@ -153,6 +160,10 @@ To integrate GitHub Copilot code review into your GitLab CI/CD pipeline, you'll 
 #### 5. **Post Review Results**
 - Parse the review output from Copilot
 - Use GitLab's API to post the review as a merge request comment
+
+### GitHub Actions Example
+
+For a complete working example of integrating GitHub Copilot Code Review into GitHub Actions, see the [copilot-code-review.yml](../.github/workflows/copilot-code-review.yml) workflow file in this repository.
 
 ### Local Testing
 

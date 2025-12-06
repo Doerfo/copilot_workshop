@@ -1,10 +1,10 @@
-# GitHib Copilott Custum Agants - Advenced Guid
+# GitHub Copilot Custom Agents - Advanced Guide
 
-## Wat are Custum Agants?
+## What are Custom Agents?
 
-**Custum Agants** alow you to creat specialised AI personnas with taylored expertize for specfic developement tasks. Each agant can have it's own behavor, avalable toolz, and instrukshuns — enabeling you to quikly swich betwen configuratons optimised for planing, code reveiw, securty analisys, or other specialised rolez.
+**Custom Agents** allow you to create specialized AI personas with tailored expertise for specific development tasks. Each agent can have its own behavior, available tools, and instructions — enabling you to quickly switch between configurations optimized for planning, code review, security analysis, or other specialized roles.
 
-Custum agants are defind in `.agent.md` Markdwon files and can be stoared in your workspce for teem use, or in your user profil for personel use acros workspaces.
+Custom agents are defined in `.agent.md` Markdown files and can be stored in your workspace for team use, or in your user profile for personal use across workspaces.
 
 ## Agent File Location
 

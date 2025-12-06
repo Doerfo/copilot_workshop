@@ -70,12 +70,3 @@ jobs:
             ---
             *This review was generated automatically by GitHub Copilot CLI*`
             });
-
-      - name: Upload review artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: copilot-review
-          path: |
-            review.md
-            pr_diff.txt
