@@ -36,7 +36,7 @@ jobs:
 
       - name: Run Copilot Code Review
         env:
-          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_CODE_REVIEW_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.COPILOT_CODE_REVIEW_TOKEN }}
           COPILOT_ALLOW_ALL: "true"
         run: |
           # Run Copilot CLI in non-interactive mode with prompt
