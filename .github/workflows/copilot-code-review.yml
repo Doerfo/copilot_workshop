@@ -37,11 +37,11 @@ jobs:
       - name: Run Copilot Code Review
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COPILOT_ALLOW_ALL: "true"
         run: |
-          # Run Copilot in non-interactive mode
-          copilot -p "Review this pull request for bugs, security issues, and best practices: $(cat pr_diff.txt)" \
-            --allow-all-tools \
-            --silent > review.md || echo "⚠️ Copilot review failed, check logs" > review.md
+          # Run Copilot CLI in non-interactive mode with prompt
+          copilot -p "Review this pull request for bugs, security issues, best practices, and spelling/grammar issues. Provide specific feedback: $(cat pr_diff.txt)" \
+            --silent > review.md 2>&1 || echo "⚠️ Copilot review failed, check logs" > review.md
           
           # Show review in logs
           echo "=== Copilot Review ==="
