@@ -71,7 +71,10 @@ flowchart TB
 ![Open MCP Configuration](../images/open_mcp.png)
 
 **File locations:**
-- **User-level** (global): `~/Library/Application Support/Code/User/mcp.json` (Mac)
+- **User-level** (global):
+  - **macOS:** `~/Library/Application Support/Code/User/mcp.json`
+  - **Windows:** `%APPDATA%\Code\User\mcp.json`
+  - **Linux:** `~/.config/Code/User/mcp.json`
 - **Workspace-level** (project): `.vscode/mcp.json` in your project root
 
 ### Visual Studio
