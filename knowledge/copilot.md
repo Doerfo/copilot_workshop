@@ -119,38 +119,63 @@ flowchart LR
     style API fill:#238636,color:#fff
 ```
 
-### GitLab CI/CD Configuration
+### GitLab CI/CD Integration Steps
 
-**File:** `.gitlab-ci.yml`
+To integrate GitHub Copilot code review into your GitLab CI/CD pipeline, you'll need to implement the following steps:
 
-```yaml
-stages:
-  - review
+#### 1. **Environment Setup**
+- Use a Node.js v22+ container image
+- Configure the job to run only on merge request events
+- Install the GitHub Copilot CLI: `npm install -g @github/copilot`
 
-copilot-code-review:
-  stage: review
-  image: node:20
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-  before_script:
-    - npm install -g @githubnext/github-copilot-cli
-    - git fetch origin $CI_MERGE_REQUEST_TARGET_BRANCH_NAME
-  script:
-    - |
-      # Get the diff between branches
-      DIFF=$(git diff origin/$CI_MERGE_REQUEST_TARGET_BRANCH_NAME...HEAD)
-      
-      # Use Copilot CLI to analyze the diff
-      echo "$DIFF" | github-copilot-cli explain --context "Review this code change for bugs, security issues, and best practices" > review.md
-      
-      # Post review as MR comment (using GitLab API)
-      curl --request POST \
-        --header "PRIVATE-TOKEN: $GITLAB_TOKEN" \
-        --header "Content-Type: application/json" \
-        --data "{\"body\": \"## 🤖 Copilot Code Review\n\n$(cat review.md | jq -Rs .)\"}" \
-        "$CI_API_V4_URL/projects/$CI_PROJECT_ID/merge_requests/$CI_MERGE_REQUEST_IID/notes"
-  variables:
-    GITHUB_TOKEN: $GITHUB_COPILOT_TOKEN
+#### 2. **Authentication**
+- Set up a `GITHUB_TOKEN` environment variable with your GitHub Copilot token
+- Configure a `GITLAB_TOKEN` for posting comments back to merge requests
+- Store these tokens as CI/CD variables (masked and protected)
+
+#### 3. **Fetch Code Changes**
+- Fetch the target branch to ensure you have the full git history
+- Generate a diff between the merge request source and target branches
+- Save the diff to a file for processing
+
+#### 4. **AI Code Review**
+- Run the GitHub Copilot CLI in non-interactive mode using the `-p` (prompt) flag
+- Use `--allow-all-tools` to automatically approve all tool executions (required for CI/CD)
+- Use `--silent` flag to output only the response without stats
+- Example command structure:
+  ```bash
+  copilot -p "Review this code change for bugs, security issues, and best practices: $(cat diff.txt)" \
+    --allow-all-tools \
+    --silent > review.md
+  ```
+- Alternatively, consider using AI APIs directly (Azure OpenAI, Anthropic Claude) for more control
+
+#### 5. **Post Review Results**
+- Parse the review output from Copilot
+- Use GitLab's API to post the review as a merge request comment
+
+### Local Testing
+
+To test the Copilot code review feature locally:
+
+```bash
+# 1. Install GitHub Copilot CLI
+npm install -g @github/copilot
+
+# 2. Authenticate (first time only)
+copilot
+# Follow prompts to login with GitHub, then exit
+
+# 3. Get diff of your last commit
+git diff HEAD~1..HEAD > last_commit.diff
+
+# 4. Run code review in non-interactive mode
+copilot -p "Review this code change for bugs, security issues, and best practices: $(cat last_commit.diff)" \
+  --allow-all-tools \
+  --silent > review.md
+
+# 5. View the review
+cat review.md
 ```
 
 ### Required Secrets
@@ -164,11 +189,16 @@ copilot-code-review:
 
 | Limitation | Workaround |
 |------------|------------|
-| No native GitLab integration | Use CLI/API bridge as shown above |
+| No native GitLab integration | Use CLI in non-interactive mode with `-p` and `--allow-all-tools` |
 | No inline comments | Post summary as MR note |
-| Rate limits | Implement retry logic, batch large diffs |
+| Premium request quota | Monitor usage with `--log-level info`, implement retry logic |
+| Large diffs may exceed token limits | Split large changes into smaller reviews |
 
-> **Note:** This is a workaround approach. For native code review, consider using GitHub for PRs or waiting for official GitLab integration.
+> **Note:** The GitHub Copilot CLI (`@github/copilot`) supports both interactive and non-interactive modes. For automated CI/CD code review:
+> - Use `-p "your prompt"` for non-interactive mode
+> - Add `--allow-all-tools` to automatically approve all tool executions
+> - Add `--silent` to get clean output suitable for parsing
+> - Each review consumes one premium request from your monthly quota
 
 ---
 
