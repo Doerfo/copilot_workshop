@@ -179,6 +179,69 @@ Copilot learns from your codebase. Better code → better suggestions:
 
 ---
 
+## Reusable Prompt Files
+
+**Prompt Files** allow you to define reusable, pre-configured prompts that appear as slash commands in Copilot Chat. They are perfect for standardizing common tasks like testing, refactoring, or documentation across your team.
+
+### File Location
+
+Prompt files use the `.prompt.md` extension and are placed in the `.github/prompts/` directory:
+
+```
+your-repo/
+├── .github/
+│   └── prompts/
+│       ├── test-gen.prompt.md     # /test-gen
+│       ├── review.prompt.md       # /review
+│       └── explain.prompt.md      # /explain
+```
+
+### Frontmatter Configuration
+
+The frontmatter defines the command name, description, and available tools.
+
+```yaml
+---
+name: playwright-demo
+description: Demonstrates how to use the Playwright MCP server to create and test a counter page.
+tools: ['read', 'search']
+model: Claude Sonnet 4
+---
+Analyze the currently open file...
+```
+
+### Frontmatter Properties
+
+| Property | Required | Description |
+|----------|----------|-------------|
+| `name` | ❌ No | The command name (e.g., `test-gen` becomes `/test-gen`). Defaults to filename. |
+| `description` | ✅ Yes | Brief description shown in the command palette. |
+| `tools` | ❌ No | List of tools the prompt can use (e.g., `['read', 'search']`). |
+| `model` | ❌ No | Specific model to use for this prompt. |
+
+### Example Prompt File
+
+**.github/prompts/create-test.prompt.md**
+
+```markdown
+---
+name: create-test
+description: Generate unit tests for the selected code
+tools: ['read']
+---
+Generate xUnit tests for the selected code.
+Ensure you cover:
+- Happy path
+- Edge cases
+- Error handling
+```
+
+### Usage
+
+Once created, you can use the prompt in Copilot Chat by typing `/` followed by the name defined in the frontmatter (e.g., `/create-test`).
+
+---
+
 ## Key Takeaways
 
 1. **Be specific** — Vague prompts get vague answers

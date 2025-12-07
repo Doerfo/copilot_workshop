@@ -24,6 +24,14 @@ This demonstrates how AI-assisted development works best when you focus on **wha
 
 ## Part 1: Set Up the Project
 
+### Step 0: Setup Git repository
+
+```bash
+mkdir CustomMcpServerWorkshop
+cd CustomMcpServerWorkshop
+git init
+```
+
 ### Step 1: Install the MCP Server Template
 
 ```bash
@@ -33,22 +41,49 @@ dotnet new install Microsoft.Extensions.AI.Templates
 ### Step 2: Create Your Notes MCP Server
 
 ```bash
-dotnet new mcpserver -n NotesMcpServer
-cd NotesMcpServer
+dotnet new mcpserver -n CustomMcpServer
+cd CustomMcpServer
+code .
 ```
 
-### Step 3: Build and Verify
+Commit your changes:
 
 ```bash
-dotnet build
+git add .
+git commit -m "Initial commit: Create CustomMcpServer project from template"
 ```
 
-You should see a successful build with the sample `get_random_number` tool included.
+code . should open the project in VS Code.
+If your using visual studio or Rider, open the `CustomMcpServer.sln` solution file instead.
+
+### Step 3: Start the Project
+
+Run and debug the default MCP server to ensure everything is set up correctly.
+Add a `.vscode/mcp.json` file with the following content:
+```json
+{
+  "servers": {
+    "CustomMcpServer": {
+      "type": "stdio",
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "."
+      ]
+    }
+  }
+}
+```
+
+Ask chatgpt in agent mode for a random number between 1 and 100 to verify the server is working.
+
 
 ### Step 4: Install Spec Kit
 
 ```bash
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+uv tool update-shell
 ```
 
 ### Step 5: Initialize Spec Kit in Your Project
@@ -84,11 +119,12 @@ Project principles:
 ## Part 3: Create the Specification
 
 Use `/speckit.specify` to define **what** you're building (not how):
+Skip the git actions specify wants to do when running the command.
 
 ```
 /speckit.specify
 
-Build an in-memory notes store for the NotesMcpServer.
+Build an in-memory notes store for the CustomMcpServer.
 
 Features:
 1. **Notes Management**
@@ -112,6 +148,8 @@ Features:
    - MeetingNotes: Create a structured meeting notes template
    - CodeReviewNote: Create a structured code review note
 ```
+
+check requirements.md for completeness.
 
 ---
 
@@ -178,13 +216,13 @@ Create `.vscode/mcp.json` in your project:
 ```jsonc
 {
     "servers": {
-        "NotesMcpServer": {
+        "CustomMcpServer": {
             "type": "stdio",
             "command": "dotnet",
             "args": [
                 "run",
                 "--project",
-                "NotesMcpServer.csproj"
+                "CustomMcpServer.csproj"
             ]
         }
     }
@@ -197,7 +235,7 @@ Create `.vscode/mcp.json` in your project:
 
 1. Open VS Code with your project
 2. Open GitHub Copilot Chat in **Agent Mode**
-3. Click the **Select tools** icon (🔧) to verify `NotesMcpServer` appears with your tools
+3. Click the **Select tools** icon (🔧) to verify `CustomMcpServer` appears with your tools
 4. Try these prompts:
    - "Add a note titled 'Workshop Ideas' with content about MCP servers"
    - "List all my notes"
@@ -223,12 +261,12 @@ Add to your `.vscode/mcp.json`:
 ```jsonc
 {
     "servers": {
-        "NotesMcpServer-Local": {
+        "CustomMcpServer-Local": {
             "type": "stdio",
             "command": "dotnet",
-            "args": ["run", "--project", "NotesMcpServer.csproj"]
+            "args": ["run", "--project", "CustomMcpServer.csproj"]
         },
-        "NotesMcpServer-HTTP": {
+        "CustomMcpServer-HTTP": {
             "type": "http",
             "url": "http://localhost:5000/mcp"
         }
@@ -273,26 +311,10 @@ flowchart LR
 
 ---
 
-## Bonus Challenges
-
-Use Spec Kit to extend your MCP server:
-
-```
-/speckit.specify Add tags support to notes. Users can add multiple tags 
-when creating notes and filter notes by tag.
-```
-
-```
-/speckit.specify Add persistence to save notes to a JSON file so they 
-survive server restarts.
-```
-
----
-
 ## Useful Resources
 
 - [Spec Kit Repository](https://github.com/github/spec-kit)
 - [Microsoft Docs: Build MCP Server](https://learn.microsoft.com/en-us/dotnet/ai/quickstarts/build-mcp-server)
 - [MCP C# SDK on GitHub](https://github.com/modelcontextprotocol/csharp-sdk)
-- [Workshop MCP Guide](../mcp_servers/mcp_server.md)
-- [Workshop Spec Kit Guide](../spec-kit/spec-kit.md)
+- [Workshop MCP Guide](../knowledge/mcp-server.md)
+- [Workshop Spec Kit Guide](../knowledge/spec-kit.md)
