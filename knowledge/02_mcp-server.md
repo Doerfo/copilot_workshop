@@ -68,7 +68,7 @@ flowchart TB
 2. Type **"MCP: Open User Configuration"**
 3. Select the command to open your `mcp.json`
 
-![Open MCP Configuration](./images/open_mcp.png)
+![Open MCP Configuration](../images/open_mcp.png)
 
 **File locations:**
 - **User-level** (global):
@@ -243,9 +243,9 @@ Organization and enterprise admins can control MCP server access for GitHub Copi
 |---------|----------|--------|
 | **MCP servers in Copilot** | Enterprise/Org → Settings → Copilot → Policies | When **disabled**, completely blocks all GitHub MCP Server access (remote & local) for Copilot editors |
 
-![Org > Settings > Copilot > policies](images/copilot_policies.png)
+![Org > Settings > Copilot > policies](../images/copilot_policies.png)
 
-![Configure MCP Server Policy](images/configure_mcp_server.png)
+![Configure MCP Server Policy](../images/configure_mcp_server.png)
 
 - Currently applies to **VS Code** and **Copilot Coding Agent**
 - Other Copilot editors (Visual Studio, JetBrains, Xcode, Eclipse) still use the legacy "Editor Preview Features" policy

@@ -1,12 +1,13 @@
+````markdown
 # Setup Copilot Instructions
 
-This task will guide you through setting up GitHub Copilot Instructions for your .NET codespace repository with a Backend (Minimal API) and Frontend (Blazor) structure.
+This task guides you through setting up GitHub Copilot Instructions for your MCP Server project to ensure consistent, high-quality AI-assisted code generation.
 
 ## Prerequisites
 
 - Completed [Setup Repository](01_setup-repository.md)
 - VS Code with GitHub Copilot extension installed
-- Repository structure: `SampleApp/BackEnd/` and `SampleApp/FrontEnd/`
+- MCP Server project structure in place
 
 ---
 
@@ -68,83 +69,121 @@ Analyze the repository structure and existing code to create comprehensive
 repository-wide Copilot instructions for .github/copilot-instructions.md.
 
 Include:
-- Tech stack (.NET 9, C# 13, Blazor, Minimal API)
-- General coding standards
-- Project structure (SampleApp/BackEnd and SampleApp/FrontEnd)
-- Common patterns (DI, async/await)
-- Ports and URLs (Backend: 8080, Frontend: 8081, Scalar API docs)
+- Tech stack (.NET 10, C# 13, MCP Server)
+- General coding standards for MCP servers
+- Project structure (Services/, Tools/, Prompts/)
+- Common patterns (DI, async/await, [McpServerTool], [McpServerPrompt])
+- MCP Server conventions (tool descriptions, prompt templates)
 - Error handling guidelines
+- Testing approach
 ```
 
 4. **Review and save** the generated content
+
+> **Tip:** You can find example instructions for C# MCP servers in the [Awesome Copilot repository](https://github.com/github/awesome-copilot/blob/main/instructions/csharp-mcp-server.instructions.md) to use as inspiration or starting point.
 
 ---
 
 ## Step 4: Generate Path-Specific Instructions with Copilot
 
-### 4.1 Backend Instructions
+### 4.1 Tools Instructions
 
-1. **Create file:** `.github/instructions/backend.instructions.md`
+1. **Create file:** `.github/instructions/tools.instructions.md`
 
 ```bash
-touch .github/instructions/backend.instructions.md
+touch .github/instructions/tools.instructions.md
 ```
 
 2. **Open Copilot Chat** and use this prompt:
 
 ```
-Create path-specific Copilot instructions for the backend.
+Create path-specific Copilot instructions for MCP Server tools.
 
-File: .github/instructions/backend.instructions.md
+File: .github/instructions/tools.instructions.md
 
 Include frontmatter:
 ---
-applyTo: "SampleApp/BackEnd/**/*.cs"
+applyTo: "**/Tools/**/*.cs"
 ---
 
 Cover:
-- Minimal API patterns (MapGet, MapPost, etc.)
-- OpenAPI/Scalar integration (.WithOpenApi(), .WithName())
-- Service layer conventions (IService interfaces)
-- HTTP status codes
-- CORS configuration for frontend (port 8081)
-- Configuration management (appsettings.json)
+- [McpServerToolType] attribute on tool classes
+- [McpServerTool] attribute on methods with clear [Description]
+- Return string values formatted for AI consumption (use emojis for status)
+- Async patterns for tool methods
+- Dependency injection for services
+- Parameter validation and error handling
+- Tool naming conventions (verb + noun)
 
-Include code examples for endpoints and services.
+Include code examples for typical tool implementations.
 ```
 
 3. **Review and save**
 
-### 4.2 Frontend Instructions
+### 4.2 Services Instructions
 
-1. **Create file:** `.github/instructions/frontend.instructions.md`
+1. **Create file:** `.github/instructions/services.instructions.md`
 
 ```bash
-touch .github/instructions/frontend.instructions.md
+touch .github/instructions/services.instructions.md
 ```
 
 2. **Open Copilot Chat** and use this prompt:
 
 ```
-Create path-specific Copilot instructions for the Blazor frontend.
+Create path-specific Copilot instructions for MCP Server services.
 
-File: .github/instructions/frontend.instructions.md
+File: .github/instructions/services.instructions.md
 
 Include frontmatter:
 ---
-applyTo: "SampleApp/FrontEnd/**/*.{razor,cs}"
+applyTo: "**/Services/**/*.cs"
 ---
 
 Cover:
-- Blazor component structure (Pages/, Shared/, Data/)
-- Naming conventions (.razor, .razor.cs files)
-- HttpClient configuration with IHttpClientFactory
-- Component lifecycle (OnInitializedAsync)
-- Event handling patterns
-- Forms and validation (EditForm, DataAnnotationsValidator)
-- State management (@inject, [Parameter])
+- Interface-first design (IService pattern)
+- Singleton registration for in-memory state
+- CRUD operation patterns
+- Thread-safe collection usage (ConcurrentDictionary)
+- Async/await patterns
+- Modern C# features (records, primary constructors)
+- Clear method naming and documentation
 
-Include Blazor component examples.
+Include service implementation examples.
+```
+
+3. **Review and save**
+
+### 4.3 Prompts Instructions
+
+1. **Create file:** `.github/instructions/prompts.instructions.md`
+
+```bash
+touch .github/instructions/prompts.instructions.md
+```
+
+2. **Open Copilot Chat** and use this prompt:
+
+```
+Create path-specific Copilot instructions for MCP Server prompts.
+
+File: .github/instructions/prompts.instructions.md
+
+Include frontmatter:
+---
+applyTo: "**/Prompts/**/*.cs"
+---
+
+Cover:
+- [McpServerPromptType] attribute on prompt classes
+- [McpServerPrompt] attribute on methods with [Description]
+- PromptMessage return type patterns
+- Template generation for AI interactions
+- Clear, actionable prompt content
+- Parameter handling for dynamic prompts
+- Combining multiple messages in prompts
+
+Include prompt implementation examples.
 ```
 
 3. **Review and save**
@@ -161,19 +200,23 @@ Your `.github/` directory should look like:
 .github/
 ├── copilot-instructions.md
 └── instructions/
-    ├── backend.instructions.md
-    └── frontend.instructions.md
+    ├── tools.instructions.md
+    ├── services.instructions.md
+    └── prompts.instructions.md
 ```
 
 ### 5.2 Test Copilot Instructions
 
-1. Open a backend file (e.g., `SampleApp/BackEnd/Program.cs`)
-2. Ask Copilot: "Add a new GET endpoint for user data"
-3. Verify it suggests Minimal API syntax with `.WithOpenApi()`
+1. Open a file in the `Tools/` folder (or create one)
+2. Ask Copilot: "Add a new tool to get the current time"
+3. Verify it suggests code with:
+   - `[McpServerTool]` attribute
+   - `[Description]` attribute
+   - Proper return format
 
-4. Open a frontend file (e.g., `SampleApp/FrontEnd/Pages/Home.razor`)
-5. Ask Copilot: "Create a component to fetch user data"
-6. Verify it uses `@inject IHttpClientFactory` and proper Blazor patterns
+4. Open a file in the `Services/` folder
+5. Ask Copilot: "Create a service to manage items"
+6. Verify it uses interface-first design and proper patterns
 
 ### 5.3 Verify Settings
 
@@ -195,7 +238,7 @@ Run in VS Code:
 
 ```bash
 git add .github/
-git commit -m "Add Copilot instructions for backend and frontend"
+git commit -m "Add Copilot instructions for MCP Server development"
 git push
 ```
 
@@ -203,24 +246,32 @@ git push
 
 ## Summary
 
-You've set up a comprehensive Copilot instruction system:
+You've set up a comprehensive Copilot instruction system for your MCP Server:
 
 | Type | Location | Applies To |
 |------|----------|------------|
 | **Repository-Wide** | `.github/copilot-instructions.md` | All files (always) |
-| **Backend Path-Specific** | `.github/instructions/backend.instructions.md` | `SampleApp/BackEnd/**/*.cs` |
-| **Frontend Path-Specific** | `.github/instructions/frontend.instructions.md` | `SampleApp/FrontEnd/**/*.{razor,cs}` |
+| **Tools** | `.github/instructions/tools.instructions.md` | `**/Tools/**/*.cs` |
+| **Services** | `.github/instructions/services.instructions.md` | `**/Services/**/*.cs` |
+| **Prompts** | `.github/instructions/prompts.instructions.md` | `**/Prompts/**/*.cs` |
 
 ## Next Steps
 
+- Proceed to [Add Prompts](03_add-prompts.md) to create reusable prompt templates
 - Experiment with Copilot Chat on different files
 - Refine instructions based on actual usage
-- Add project-specific patterns as you develop
-- Share instructions with your team
 
 ## Tips
 
 - Keep instructions concise and actionable
-- Update as your project evolves
+- Update as your MCP server evolves
 - Use examples to show expected patterns
 - Test instructions regularly to ensure they work
+
+## Useful Resources
+
+- [VS Code: Custom Instructions](https://code.visualstudio.com/docs/copilot/customization/custom-instructions)
+- [Awesome Copilot](https://github.com/github/awesome-copilot) - Collection of example instructions and best practices
+- [C# MCP Server Instructions Example](https://github.com/github/awesome-copilot/blob/main/instructions/csharp-mcp-server.instructions.md)
+- [MCP Server Patterns](../knowledge/mcp-server.md)
+````

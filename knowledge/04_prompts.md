@@ -6,7 +6,7 @@
 
 ### How Copilot Composes Your Prompt
 
-![Prompt Composition](images/prompt_composition.png)
+![Prompt Composition](../images/prompt_composition.png)
 
 ## Core Strategies
 

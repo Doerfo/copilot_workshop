@@ -6,7 +6,7 @@ GitHub Copilot supports multiple AI models, each with different strengths. Selec
 
 ### Model Selection in VS Code
 
-![Model Picker](./images/model_picker.png)
+![Model Picker](../images/model_picker.png)
 
 1. Open Copilot Chat (`Cmd + Shift + I` / `Ctrl + Shift + I`)
 2. Click the model selector dropdown at the top of the chat panel
