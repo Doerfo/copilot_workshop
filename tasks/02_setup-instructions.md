@@ -64,17 +64,19 @@ touch .github/copilot-instructions.md
 3. **Use this prompt:**
 
 ```
-Analyze the repository structure and existing code to create comprehensive 
-repository-wide Copilot instructions for .github/copilot-instructions.md.
+  Analyze the repository structure and existing code to create comprehensive 
+  repository-wide Copilot instructions for .github/copilot-instructions.md.
+  As baseline use https://github.com/github/awesome-copilot/blob/main/instructions/csharp-mcp-server.instructions.md only add or modify instructions if they are relevant to this specific repository.
+  Otherwise keep the instructions concise and focused on best practices for this MCP Server project.
 
-Include:
-- Tech stack (.NET 10, C# 13, MCP Server)
-- General coding standards for MCP servers
-- Project structure (Services/, Tools/, Prompts/)
-- Common patterns (DI, async/await, [McpServerTool], [McpServerPrompt])
-- MCP Server conventions (tool descriptions, prompt templates)
-- Error handling guidelines
-- Testing approach
+  Include:
+  - Tech stack (.NET 10, C# 13, MCP Server)
+  - General coding standards for MCP servers
+  - Project structure (Services/, Tools/, Prompts/)
+  - Common patterns (DI, async/await, [McpServerTool], [McpServerPrompt])
+  - MCP Server conventions (tool descriptions, prompt templates)
+  - Error handling guidelines
+  - Testing approach
 ```
 
 4. **Review and save** the generated content
@@ -115,45 +117,12 @@ Cover:
 - Tool naming conventions (verb + noun)
 
 Include code examples for typical tool implementations.
+Remove the path specific instructions you created from global instructions to avoid duplication.
 ```
 
 3. **Review and save**
 
-### 4.2 Services Instructions
-
-1. **Create file:** `.github/instructions/services.instructions.md`
-
-```bash
-touch .github/instructions/services.instructions.md
-```
-
-2. **Open Copilot Chat** and use this prompt:
-
-```
-Create path-specific Copilot instructions for MCP Server services.
-
-File: .github/instructions/services.instructions.md
-
-Include frontmatter:
----
-applyTo: "**/Services/**/*.cs"
----
-
-Cover:
-- Interface-first design (IService pattern)
-- Singleton registration for in-memory state
-- CRUD operation patterns
-- Thread-safe collection usage (ConcurrentDictionary)
-- Async/await patterns
-- Modern C# features (records, primary constructors)
-- Clear method naming and documentation
-
-Include service implementation examples.
-```
-
-3. **Review and save**
-
-### 4.3 Prompts Instructions
+### 4.2 Prompts Instructions
 
 1. **Create file:** `.github/instructions/prompts.instructions.md`
 
@@ -183,6 +152,7 @@ Cover:
 - Combining multiple messages in prompts
 
 Include prompt implementation examples.
+Remove the path specific instructions you created from global instructions to avoid duplication.
 ```
 
 3. **Review and save**
@@ -200,7 +170,6 @@ Your `.github/` directory should look like:
 ├── copilot-instructions.md
 └── instructions/
     ├── tools.instructions.md
-    ├── services.instructions.md
     └── prompts.instructions.md
 ```
 
@@ -212,24 +181,6 @@ Your `.github/` directory should look like:
    - `[McpServerTool]` attribute
    - `[Description]` attribute
    - Proper return format
-
-4. Open a file in the `Services/` folder
-5. Ask Copilot: "Create a service to manage items"
-6. Verify it uses interface-first design and proper patterns
-
-### 5.3 Verify Settings
-
-Run in VS Code:
-- Open Command Palette (`Cmd+Shift+P` / `Ctrl+Shift+P`)
-- Type: "Preferences: Open Settings (JSON)"
-- Confirm both settings are `true`:
-
-```json
-{
-  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
-  "github.copilot.chat.useAgentInstructions": true
-}
-```
 
 ---
 
@@ -251,14 +202,7 @@ You've set up a comprehensive Copilot instruction system for your MCP Server:
 |------|----------|------------|
 | **Repository-Wide** | `.github/copilot-instructions.md` | All files (always) |
 | **Tools** | `.github/instructions/tools.instructions.md` | `**/Tools/**/*.cs` |
-| **Services** | `.github/instructions/services.instructions.md` | `**/Services/**/*.cs` |
 | **Prompts** | `.github/instructions/prompts.instructions.md` | `**/Prompts/**/*.cs` |
-
-## Next Steps
-
-- Proceed to [Add Prompts](03_add-prompts.md) to create reusable prompt templates
-- Experiment with Copilot Chat on different files
-- Refine instructions based on actual usage
 
 ## Tips
 
