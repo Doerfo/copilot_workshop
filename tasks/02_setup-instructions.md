@@ -1,4 +1,3 @@
-````markdown
 # Setup Copilot Instructions
 
 This task guides you through setting up GitHub Copilot Instructions for your MCP Server project to ensure consistent, high-quality AI-assisted code generation.
@@ -274,4 +273,3 @@ You've set up a comprehensive Copilot instruction system for your MCP Server:
 - [Awesome Copilot](https://github.com/github/awesome-copilot) - Collection of example instructions and best practices
 - [C# MCP Server Instructions Example](https://github.com/github/awesome-copilot/blob/main/instructions/csharp-mcp-server.instructions.md)
 - [MCP Server Patterns](../knowledge/mcp-server.md)
-````

@@ -1,4 +1,3 @@
-````markdown
 # Add Repository Prompts
 
 This task guides you through setting up a **Prompt Library** for your MCP Server repository using **Prompt Files**. Prompt files allow you to define reusable, pre-configured prompts with specific context and tools, making it easier to perform common MCP development tasks consistently.
@@ -294,4 +293,3 @@ You've created a comprehensive prompt library for MCP Server development:
 
 - [VS Code: Prompt Files](https://code.visualstudio.com/docs/copilot/customization/prompt-files)
 - [Copilot Chat Variables](https://code.visualstudio.com/docs/copilot/chat/chat-variables)
-````

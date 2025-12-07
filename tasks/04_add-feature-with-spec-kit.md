@@ -1,4 +1,3 @@
-````markdown
 # Add Feature with Spec Kit: Notes Functionality
 
 In this task, you'll use **Spec Kit** to add a complete notes management feature to your MCP Server. Instead of writing all the code yourself, you'll use the Spec-Driven Development workflow to let GitHub Copilot generate the implementation based on clear specifications.
@@ -359,4 +358,3 @@ Add category support:
 - [MCP C# SDK on GitHub](https://github.com/modelcontextprotocol/csharp-sdk)
 - [Workshop MCP Guide](../knowledge/mcp-server.md)
 - [Workshop Spec Kit Guide](../knowledge/spec-kit.md)
-````
