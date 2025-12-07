@@ -75,8 +75,6 @@ Project principles:
 - Use the ModelContextProtocol.Server library with [McpServerTool] and [McpServerPrompt] attributes
 - All tools must have clear [Description] attributes for AI discoverability
 - Use dependency injection for services (register as Singleton for in-memory state)
-- Return user-friendly formatted strings from tools (use emojis for status)
-- Keep the implementation simple and focused on the workshop learning objectives
 - Follow C# conventions and modern .NET patterns (records, primary constructors)
 ```
 
@@ -87,7 +85,6 @@ This creates a `constitution.md` file in `.specify/` that guides all future AI i
 ## Part 3: Create the Specification
 
 Use `/speckit.specify` to define **what** you're building (not how). This is the most important step - a clear specification produces better AI-generated code.
-
 
 ```
 /speckit.specify
@@ -118,6 +115,18 @@ Features:
 ```
 
 After running, check `.specify/requirements.md` for completeness. The specification should capture all the features you want to build.
+
+### Optional: Clarify Underspecified Areas
+
+After creating the specification, you can use `/speckit.clarify` to identify areas that need more detail:
+
+```
+/speckit.clarify
+
+Review the notes management requirements and identify any ambiguous or underspecified areas.
+```
+
+This command (formerly `/quizme`) helps ensure your specification is complete before moving to the plan phase.
 
 ---
 
@@ -169,6 +178,21 @@ Copilot will analyze your specification and plan, then generate a task breakdown
 6. Test the implementation
 
 Review the generated tasks in `.specify/tasks.md`.
+
+### Optional: Analyze Cross-Artifact Consistency
+
+Before implementing, you can use `/speckit.analyze` to verify consistency across your specification, plan, and tasks:
+
+```
+/speckit.analyze
+```
+
+This command performs cross-artifact consistency and coverage analysis, ensuring that:
+- All requirements from the specification are covered in the plan
+- All planned components have corresponding tasks
+- There are no inconsistencies between artifacts
+
+Run this after `/speckit.tasks` and before `/speckit.implement` for enhanced quality validation.
 
 ---
 
@@ -272,30 +296,21 @@ Use the QuickNote prompt to capture: Remember to add error handling
 Use the MeetingNotes prompt for a sprint planning meeting
 ```
 
----
+### Optional: Generate Quality Checklists
 
-## Part 9: Iterate and Refine
-
-If the implementation needs adjustments, use `/speckit.clarify`:
+You can use `/speckit.checklist` to create custom quality validation checklists:
 
 ```
-/speckit.clarify
+/speckit.checklist
 
-The SearchNotes tool should also support searching by date range.
-Add optional startDate and endDate parameters.
+Generate a quality checklist for the notes management feature that validates:
+- Requirements completeness
+- MCP tool attribute clarity
+- Error handling coverage
+- User-friendly response formatting
 ```
 
-Then run `/speckit.implement` again to apply the changes.
-
----
-
-## Part 10: Commit Your Feature
-
-```bash
-git add .
-git commit -m "Add notes management feature with MCP tools and prompts"
-git push
-```
+This command generates custom checklists that act like "unit tests for English" - helping you validate that your requirements are complete, clear, and consistent before or after implementation.
 
 ---
 
@@ -322,6 +337,16 @@ flowchart LR
 3. **Iterative refinement** — Use `/speckit.clarify` if results aren't right
 4. **AI as implementer** — You architect, Copilot codes
 5. **Consistency** — Constitution ensures consistent patterns across features
+
+### Optional Quality Commands
+
+For enhanced quality and validation, consider using these optional commands:
+
+| Command | When to Use | Purpose |
+|---------|-------------|---------|
+| `/speckit.clarify` | After `/speckit.specify`, before `/speckit.plan` | Clarify underspecified areas (formerly `/quizme`) |
+| `/speckit.analyze` | After `/speckit.tasks`, before `/speckit.implement` | Cross-artifact consistency & coverage analysis |
+| `/speckit.checklist` | Any time | Generate custom quality checklists that validate requirements completeness, clarity, and consistency (like "unit tests for English") |
 
 ---
 
