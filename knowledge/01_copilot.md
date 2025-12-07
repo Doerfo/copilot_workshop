@@ -35,6 +35,8 @@ GitHub Copilot supports multiple AI models, each with different strengths. Selec
 
 GitHub Copilot allows you to configure **custom models** from external providers like Azure OpenAI, Anthropic, or Google Cloud. This enables enterprise scenarios where you need specific model versions, data residency, or cost control.
 
+![Enable Custom models](../images/enable_custom_models.png)
+
 ### Configuring Custom Models in VS Code
 
 1. Open VS Code Settings (`Cmd + ,` / `Ctrl + ,`)
@@ -45,37 +47,18 @@ GitHub Copilot allows you to configure **custom models** from external providers
 
 ```json
 {
-    "github.copilot.chat.models": [
-        {
-            "vendor": "azure",
-            "family": "gpt-4o",
-            "id": "gpt-4o-2024-05-13",
-            "name": "Azure GPT-4o (Custom)",
-            "endpoint": "https://your-resource.openai.azure.com/",
-            "apiKey": "${env:AZURE_OPENAI_KEY}"
-        },
-        {
-            "vendor": "anthropic",
-            "family": "claude",
-            "id": "claude-sonnet-4-20250514",
-            "name": "Anthropic Claude (Direct)",
-            "endpoint": "https://api.anthropic.com/v1",
-            "apiKey": "${env:ANTHROPIC_API_KEY}"
+    "github.copilot.chat.azureModels": {
+        "custom-model": {
+            "name": "My own GPT-4.1 Mini",
+            "maxInputTokens": 64000,
+            "maxOutputTokens": 16000,
+            "toolCalling": true,
+            "url": "https://abt-foundry.cognitiveservices.azure.com/openai/deployments/gpt-4.1-mini/chat/completions?api-version=2025-01-01-preview",
+            "vision": false
         }
-    ]
+    },
 }
 ```
-
-### Custom Model Properties
-
-| Property | Required | Description |
-|----------|----------|-------------|
-| `vendor` | ✅ Yes | Provider: `azure`, `anthropic`, `google`, `openai` |
-| `family` | ✅ Yes | Model family: `gpt-4o`, `claude`, `gemini` |
-| `id` | ✅ Yes | Specific model version ID |
-| `name` | ✅ Yes | Display name in model picker |
-| `endpoint` | ✅ Yes | API endpoint URL |
-| `apiKey` | ✅ Yes | API key (use `${env:VAR}` for environment variables) |
 
 ### Use Cases for Custom Models
 
@@ -147,8 +130,6 @@ To integrate GitHub Copilot code review into your GitLab CI/CD pipeline, you'll 
 
 #### 4. **AI Code Review**
 - Run the GitHub Copilot CLI in non-interactive mode using the `-p` (prompt) flag
-- Use `--allow-all-tools` to automatically approve all tool executions (required for CI/CD)
-- Use `--silent` flag to output only the response without stats
 - Example command structure:
   ```bash
   copilot -p "Review this code change for bugs, security issues, and best practices: $(cat diff.txt)" \

@@ -247,6 +247,8 @@ Organization and enterprise admins can control MCP server access for GitHub Copi
 
 ![Configure MCP Server Policy](../images/configure_mcp_server.png)
 
+![Ai mcp controls](../images/ai_mcp_controls.png)
+
 - Currently applies to **VS Code** and **Copilot Coding Agent**
 - Other Copilot editors (Visual Studio, JetBrains, Xcode, Eclipse) still use the legacy "Editor Preview Features" policy
 
