@@ -37,16 +37,15 @@ touch .github/prompts/add-mcp-tool.prompt.md
 ---
 name: add-mcp-tool
 description: Add a new MCP tool to the server based on a description
-mode: agent
+agent: agent
+argument-hint: Describe the tool you want to create
 tools:
-  - TODO
+  ['vscode', 'execute', 'read', 'agent', 'edit', 'search', 'web', 'microsoft-docs/*', 'todo']
 ---
 
 # Add MCP Tool
 
-Create a new MCP Server tool based on the following description:
-
-{{ input }}
+Create a new MCP Server tool based on the following description.
 
 ## Requirements
 
@@ -85,9 +84,9 @@ touch .github/prompts/review-selected-code.prompt.md
 ---
 name: review-selected-code
 description: Review selected code for quality, security, and best practices
-mode: agent
-tools:
-  - filesystem
+agent: agent
+tools: 
+  ['read', 'search', 'web', 'microsoft-docs/*', 'todo']
 ---
 
 # Review Selected Code
@@ -130,7 +129,7 @@ For each issue found, provide:
 Provide specific, actionable recommendations.
 ```
 
-### 3.2 Test Current File (`test-current-file.prompt.md`)
+### 3.2 (optional) Test Current File (`test-current-file.prompt.md`)
 
 Create a prompt to generate tests for the currently open file:
 
@@ -140,18 +139,18 @@ touch .github/prompts/test-current-file.prompt.md
 
 **Add content:**
 
-```markdown
+````markdown
 ---
 name: test-current-file
 description: Generate xUnit tests for the currently open file
-mode: agent
-tools:
-  - filesystem
+agent: agent
+tools: 
+  ['vscode', 'execute', 'read', 'agent', 'edit', 'search', 'web', 'microsoft-docs/*', 'todo']
 ---
 
 # Test Current File
 
-Generate comprehensive xUnit tests for the currently open file.
+Generate comprehensive xUnit tests for ${file}.
 
 ## Requirements
 
@@ -213,7 +212,7 @@ public class RandomNumberToolsTests
 ```
 
 Generate complete test coverage for all public methods.
-```
+````
 
 ---
 
@@ -241,7 +240,7 @@ Your `.github/prompts/` directory should now contain:
 
 4. **Test `/add-mcp-tool`**:
    ```
-   /add-mcp-tool Create a tool that generates a random number within a specified range
+   /add-mcp-tool Create a tool that flips a coin and returns "Heads" or "Tails".
    ```
 
 5. **Test `/review-selected-code`**:
@@ -249,22 +248,11 @@ Your `.github/prompts/` directory should now contain:
    - Run `/review-selected-code`
    - Verify it provides structured feedback
 
-6. **Test `/test-current-file`**:
-   - Open a Tools or Services file
+6. **Test `/test-current-file` (optional)**:
+   - Create a new xUnit test project (you should use copilot to help)
+   - Open a Tools or Services file 
    - Run `/test-current-file`
    - Verify it generates comprehensive xUnit tests
-
----
-
-## Step 5: Commit and Push
-
-```bash
-git add .github/prompts/
-git commit -m "Add MCP Server prompt templates"
-git push
-```
-
----
 
 ## Summary
 
@@ -276,20 +264,7 @@ You've created a comprehensive prompt library for MCP Server development:
 | `/review-selected-code` | Review code for best practices | Select code, then `/review-selected-code` |
 | `/test-current-file` | Generate tests for current file | Open file, then `/test-current-file` |
 
-## Next Steps
-
-- Proceed to [Add Feature with Spec Kit](04_add-feature-with-spec-kit.md) to add the notes functionality
-- Customize prompts based on your specific needs
-- Add team-specific prompts for common patterns
-
-## Tips
-
-- Prompts can reference other files using `#file:` syntax
-- Use `mode: agent` for prompts that need to modify files
-- Keep prompt descriptions clear for discoverability
-- Update prompts as you learn what works best
-
 ## References
 
 - [VS Code: Prompt Files](https://code.visualstudio.com/docs/copilot/customization/prompt-files)
-- [Copilot Chat Variables](https://code.visualstudio.com/docs/copilot/chat/chat-variables)
+- [04_prompts.md](../knowledge/04_prompts.md)

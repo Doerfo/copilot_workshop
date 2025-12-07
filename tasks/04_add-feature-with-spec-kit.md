@@ -16,9 +16,15 @@ This demonstrates how AI-assisted development works best when you focus on **wha
 ## Prerequisites
 
 - Completed [Setup Repository](01_setup-repository.md)
-- Completed [Setup Instructions](02_setup-instructions.md)
-- Completed [Add Prompts](03_add-prompts.md)
-- **uv** package manager - [Install](https://docs.astral.sh/uv/getting-started/installation/)
+- Make sure all local changes are committed
+   ```bash
+   git status
+   ```
+   ```bash
+   git add .
+   git commit -m "Save progress before adding notes feature"
+   git push
+   ```
 
 ---
 
@@ -26,7 +32,10 @@ This demonstrates how AI-assisted development works best when you focus on **wha
 
 ### Step 1: Install Spec Kit CLI
 
+[Install uv](https://docs.astral.sh/uv/getting-started/installation/)
+
 ```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 uv tool update-shell
 ```

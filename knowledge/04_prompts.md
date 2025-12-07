@@ -73,6 +73,7 @@ Just like in software engineering, solving one big problem is disproportionately
 **Tactics:**
 1. Ask Copilot to work out a solution before jumping to conclusions
 2. Build context with snippets of information to guide the model
+3. Use the Plan agent in VS Code
 
 ### 5. Use External Tools
 
@@ -183,6 +184,8 @@ Copilot learns from your codebase. Better code → better suggestions:
 
 **Prompt Files** allow you to define reusable, pre-configured prompts that appear as slash commands in Copilot Chat. They are perfect for standardizing common tasks like testing, refactoring, or documentation across your team.
 
+[VS Code Copilot Prompt Files](https://code.visualstudio.com/docs/copilot/customization/prompt-files)
+
 ### File Location
 
 Prompt files use the `.prompt.md` extension and are placed in the `.github/prompts/` directory:
@@ -216,8 +219,39 @@ Analyze the currently open file...
 |----------|----------|-------------|
 | `name` | ❌ No | The command name (e.g., `test-gen` becomes `/test-gen`). Defaults to filename. |
 | `description` | ✅ Yes | Brief description shown in the command palette. |
-| `tools` | ❌ No | List of tools the prompt can use (e.g., `['read', 'search']`). |
+| `tools` | ❌ No | List of tools the prompt can use (e.g., `['read', 'search']`). Use `<server name>/*` to include all tools from an MCP server. |
 | `model` | ❌ No | Specific model to use for this prompt. |
+| `agent` | ❌ No | The agent used for running the prompt: `ask`, `edit`, `agent`, or a custom agent name. |
+| `argument-hint` | ❌ No | Hint text shown in the chat input field to guide users on how to interact with the prompt. |
+
+### Body
+
+The body contains the prompt text sent to the LLM. You can include:
+
+#### File References
+
+Reference other workspace files using Markdown links with relative paths:
+
+```markdown
+See [coding guidelines](../instructions/coding.md) for style rules.
+```
+
+#### Tool References
+
+Reference agent tools using the `#tool:<tool-name>` syntax:
+
+```markdown
+Use #tool:githubRepo to search for relevant code examples.
+```
+
+#### Variables
+
+| Variable Type | Syntax | Description |
+|---------------|--------|-------------|
+| **Workspace** | `${workspaceFolder}`, `${workspaceFolderBasename}` | Reference workspace paths |
+| **Selection** | `${selection}`, `${selectedText}` | Currently selected code/text |
+| **File Context** | `${file}`, `${fileBasename}`, `${fileDirname}`, `${fileBasenameNoExtension}` | Current file information |
+| **Input** | `${input:variableName}`, `${input:variableName:placeholder}` | Pass values from the chat input field |
 
 ### Example Prompt File
 
@@ -257,3 +291,4 @@ Once created, you can use the prompt in Copilot Chat by typing `/` followed by t
 - [How to Write Better Prompts](https://github.blog/2023-06-20-how-to-write-better-prompts-for-github-copilot/)
 - [GitHub Copilot Chat Cheat Sheet](https://docs.github.com/en/copilot/using-github-copilot/github-copilot-chat-cheat-sheet)
 - [Awesome Copilot Prompts](https://github.com/github/awesome-copilot/tree/main/prompts)
+- [VS Code Copilot Prompt Files](https://code.visualstudio.com/docs/copilot/customization/prompt-files)
