@@ -34,6 +34,8 @@ This demonstrates how AI-assisted development works best when you focus on **wha
 
 [Install uv](https://docs.astral.sh/uv/getting-started/installation/)
 
+- all commands can be run in the codespace terminal
+
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
@@ -313,15 +315,6 @@ flowchart LR
     style E fill:#cf222e,color:#fff
 ```
 
-### What You Built
-
-| Category | Items |
-|----------|-------|
-| **Tools** | `AddNote`, `GetNote`, `ListNotes`, `SearchNotes`, `UpdateNote`, `DeleteNote` |
-| **Prompts** | `QuickNote`, `SummarizeNotes`, `FindTopicNotes`, `MeetingNotes`, `CodeReviewNote` |
-| **Services** | `NotesService` with in-memory storage |
-| **Model** | `NoteItem` record |
-
 ### Key Takeaways
 
 1. **Specifications first** — Clear specs produce better AI-generated code
@@ -332,38 +325,9 @@ flowchart LR
 
 ---
 
-## Bonus: Add More Features
-
-Now that you've learned the Spec Kit workflow, try adding more features:
-
-### Feature Idea: Tags
-
-```
-/speckit.specify
-
-Add tagging support to notes:
-- Each note can have multiple tags
-- Add tools: AddTagToNote, RemoveTagFromNote, ListNotesWithTag
-- Tags are case-insensitive and stored lowercase
-```
-
-### Feature Idea: Note Categories
-
-```
-/speckit.specify
-
-Add category support:
-- Notes can belong to one category (optional)
-- Categories: Work, Personal, Ideas, Meeting, Code
-- Add tool: ListNotesByCategory
-```
-
----
-
 ## Useful Resources
 
 - [Spec Kit Repository](https://github.com/github/spec-kit)
 - [Microsoft Docs: Build MCP Server](https://learn.microsoft.com/en-us/dotnet/ai/quickstarts/build-mcp-server)
-- [MCP C# SDK on GitHub](https://github.com/modelcontextprotocol/csharp-sdk)
-- [Workshop MCP Guide](../knowledge/mcp-server.md)
-- [Workshop Spec Kit Guide](../knowledge/spec-kit.md)
+- [Workshop MCP Guide](../knowledge/02_mcp-server.md)
+- [Workshop Spec Kit Guide](../knowledge/06_spec-kit.md)
