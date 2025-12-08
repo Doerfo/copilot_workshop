@@ -200,8 +200,6 @@ GitHub Copilot can significantly accelerate debugging by analyzing errors, sugge
 
 ### Debugging Workflows
 
-<!-- 📸 SCREENSHOT: Copilot inline error fix suggestion in VS Code -->
-
 #### 1. Inline Error Analysis
 
 When an error occurs in your code:
@@ -209,8 +207,6 @@ When an error occurs in your code:
 1. Hover over the red squiggly underline
 2. Click the **Copilot sparkle icon** ✨
 3. Select **"Fix with Copilot"** or **"Explain this error"**
-
-<!-- 📸 SCREENSHOT: Copilot sparkle icon on error hover -->
 
 #### 2. Debug Console Integration
 
@@ -231,8 +227,6 @@ Explain this stack trace and suggest a fix
 #### 3. Terminal Error Analysis
 
 When you encounter errors in the terminal:
-
-<!-- 📸 SCREENSHOT: Terminal error with "Explain with Copilot" button -->
 
 1. Click the **✨ sparkle icon** next to the error
 2. Or select the error text and use **"Explain with Copilot"**
@@ -272,173 +266,33 @@ The test passes locally but fails in CI with a timeout.
 What could cause this difference?
 ```
 
----
+### Debugging with Copilot in Visual Studio
 
-## Developing with Playwright MCP Server
+Visual Studio offers enhanced AI-powered debugging capabilities that understand your call stacks, frames, variables, and exceptions. When debugging in Visual Studio, you can leverage the **Ask Copilot** button for context-aware assistance without needing to manually provide debugging context.
 
-The **Playwright MCP Server** enables GitHub Copilot to control a real browser, making it an incredibly powerful tool for web development, testing, and automation.
+![Debug with Visual studio](../images/debug_with_visual_studio.png)
 
-### What Playwright MCP Enables
+#### Key AI-Enhanced Debugging Features
 
-| Capability | Description |
-|------------|-------------|
-| **Live browser control** | Copilot can navigate, click, type, and interact with web pages |
-| **Visual debugging** | See exactly what Copilot sees in the browser |
-| **Test generation** | Create Playwright tests from natural language |
-| **Web scraping** | Extract data from websites with AI assistance |
-| **UI development** | Build and iterate on UI with real-time browser feedback |
+| Feature | Capability |
+|---------|------------|
+| **Exception Analysis** | Get instant explanations and fixes when exceptions occur, including deadlock detection |
+| **Variable Inspection** | AI assistance in Autos and Locals windows to understand variable states |
+| **Conditional Breakpoints** | AI-generated suggestions for breakpoint conditions and tracepoints |
+| **LINQ Query Analysis** | Hover over LINQ queries to analyze return values with Copilot |
+| **Data Tips** | Get AI explanations when hovering over variables during debugging |
+| **Call Stack Analysis** | Understand complex execution paths with AI assistance |
 
-### Setup
+#### Quick Debugging Workflow
 
-#### 1. Configure MCP Server
+1. **When an exception occurs**: Click the **Ask Copilot** button in the exception helper
+2. **Review suggestions**: Copilot provides analysis, explanations, and code fixes
+3. **Preview and apply**: Use the **Preview** button to review suggested fixes before applying
+4. **Continue debugging**: Restart the debugger to verify the fix
 
-Add to your `mcp.json` (see [MCP Server guide](mcp-server.md) for file locations):
-
-```jsonc
-{
-    "servers": {
-        "playwright": {
-            "type": "stdio",
-            "command": "npx",
-            "args": ["@playwright/mcp@latest"]
-        }
-    }
-}
-```
-
-#### 2. Start Using in Copilot Chat
-
-Once configured, Copilot can control the browser through natural language:
-
-```
-Navigate to our staging site and test the login flow
-```
-
-```
-Take a screenshot of the homepage and identify accessibility issues
-```
-
-### Available Tools
-
-<!-- 📸 SCREENSHOT: Playwright MCP tools list in Copilot Chat -->
-
-| Tool | Description |
-|------|-------------|
-| `browser_navigate` | Go to a URL |
-| `browser_click` | Click on an element |
-| `browser_type` | Type text into inputs |
-| `browser_snapshot` | Capture page state and accessibility tree |
-| `browser_screenshot` | Take a visual screenshot |
-| `browser_wait` | Wait for elements or conditions |
-| `browser_evaluate` | Execute JavaScript in the page |
-
-### Development Workflows
-
-#### UI Development with Live Feedback
-
-```
-Open localhost:3000 and take a snapshot. 
-Then suggest CSS improvements for the navigation bar.
-```
-
-#### Automated Test Generation
-
-```
-Navigate through the checkout flow on our e-commerce site:
-1. Add an item to cart
-2. Go to checkout
-3. Fill in shipping details
-4. Verify the order summary
-
-Then generate a Playwright test that covers this flow.
-```
-
-#### Visual Regression Testing
-
-```
-Take screenshots of all pages in our app and compare them 
-to the baseline screenshots in /tests/screenshots/
-```
-
-#### Accessibility Auditing
-
-```
-Navigate to our marketing site and analyze each page 
-for accessibility issues. Create a report with WCAG violations.
-```
-
-### Example: Building a Feature with Playwright MCP
-
-```mermaid
-flowchart TB
-    subgraph Workflow["Development Workflow with Playwright MCP"]
-        Start["Start: Feature Request"]
-        Navigate["1. Navigate to app"]
-        Analyze["2. Analyze current state"]
-        Code["3. Write/modify code"]
-        Refresh["4. Refresh & validate"]
-        Test["5. Generate tests"]
-        Done["6. Feature complete"]
-    end
-    
-    Start --> Navigate --> Analyze --> Code --> Refresh
-    Refresh -->|"Issues found"| Code
-    Refresh -->|"Works correctly"| Test --> Done
-    
-    style Navigate fill:#45ba4b,color:#fff
-    style Analyze fill:#0969da,color:#fff
-    style Code fill:#8957e5,color:#fff
-    style Test fill:#bf8700,color:#000
-```
-
-### Prompt Examples for Playwright Development
-
-| Task | Prompt |
-|------|--------|
-| **Start development server** | "Open a browser and navigate to localhost:5173, then describe the current UI" |
-| **Test a form** | "Fill out the registration form with test data and submit it, then verify the success message" |
-| **Debug layout issues** | "Take a screenshot of the mobile view (375px width) and identify layout problems" |
-| **Generate E2E tests** | "Walk through the user onboarding flow and generate a Playwright test file" |
-| **Check responsive design** | "Take screenshots at mobile, tablet, and desktop widths and compare the layouts" |
-
-### Best Practices
-
-| Practice | Reason |
-|----------|--------|
-| Start with `browser_snapshot` | Gives Copilot the page structure before acting |
-| Be specific about elements | "Click the blue 'Submit' button" vs "Click submit" |
-| Use natural flow descriptions | Describe the user journey, not individual clicks |
-| Combine with file editing | Let Copilot modify code and immediately verify |
-
-### Configuring Playwright MCP Tools
-
-You can enable/disable specific tools in your `mcp.json`:
-
-```jsonc
-{
-    "servers": {
-        "playwright": {
-            "type": "stdio",
-            "command": "npx",
-            "args": ["@playwright/mcp@latest"],
-            "tools": {
-                "browser_file_upload": "disabled",
-                "browser_pdf_save": "disabled"
-            }
-        }
-    }
-}
-```
+The AI understands your debugging context including the current call stack, exception details, and variable values, so you can ask questions directly without providing additional context.
 
 ---
-
-## Key Takeaways
-
-1. **Choose models wisely** — Match the model to your task complexity
-2. **Custom models enable enterprise scenarios** — BYOK for compliance and cost control
-3. **GitLab integration is possible** — Use CLI/API bridge for code review in GitLab CI/CD
-4. **Debugging is accelerated** — Let Copilot analyze errors, stack traces, and suggest fixes
-5. **Playwright MCP is transformative** — Real browser control enables powerful development and testing workflows
 
 ## Useful Links
 

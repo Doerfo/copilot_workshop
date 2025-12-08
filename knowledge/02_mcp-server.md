@@ -290,6 +290,30 @@ Depending on the server, they may have access to:
 | **Scope Minimization** | Request only required scopes, use repo-specific access over org-wide |
 | **Credential Storage** | Use VS Code's secret storage or platform credential managers, never store tokens in source code |
 
+## MCP Registry
+
+An **MCP Registry** is like an app store for MCP servers - it provides a centralized, searchable catalog of available MCP servers. The [Official MCP Registry](https://registry.modelcontextprotocol.io/) serves as the authoritative repository for publicly-available MCP servers, maintained by the open-source community.
+
+### How It Works
+
+MCP registries are **metaregistries** - they host metadata about servers (name, description, version, how to install) but not the actual code. The code lives in package registries like npm, PyPI, or Docker Hub.
+
+### Registry Options for Organizations
+
+Organizations can control which MCP servers their developers can access by configuring an MCP registry. There are two main approaches:
+
+| Option | Description | Best For |
+|--------|-------------|----------|
+| **Self-hosted Registry** | Fork and host the [open-source MCP Registry](https://github.com/modelcontextprotocol/registry), run it locally with Docker, or build a custom implementation | Full control, air-gapped environments, custom policies |
+| **Azure API Center** | Use Microsoft's managed service with automatic CORS, built-in governance, and no server setup | Teams already using Azure, quick setup, managed solution |
+
+Both options require implementing the MCP registry v0.1 specification with endpoints like `/v0.1/servers` to list available servers.
+
+> **Learn more:** 
+> - [MCP Registry Overview](https://modelcontextprotocol.info/tools/registry/)
+> - [Configure MCP Registry for Organizations](https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-mcp-registry)
+> - [Locking Down MCP: Create a Private Registry on Azure API Center](https://devblogs.microsoft.com/all-things-azure/locking-down-mcp-create-a-private-registry-on-azure-api-center-and-enforce-it-in-github-copilot-and-vs-code/)
+
 ## MCP Inspector
 
 The [MCP Inspector](https://github.com/modelcontextprotocol/inspector) is an interactive developer tool for testing and debugging MCP servers. It provides a web-based UI to explore tools, resources, prompts, and test server functionality.
@@ -356,3 +380,6 @@ http://localhost:6274/?transport=streamable-http&serverUrl=http://localhost:8787
 - [MCP Server list github repo](https://github.com/modelcontextprotocol/servers)
 - [MCP Servers in VS Code](https://code.visualstudio.com/docs/copilot/customization/mcp-servers)
 - [Extend Coding Agent with MCP](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp)
+- [MCP Registry Overview](https://modelcontextprotocol.info/tools/registry/)
+- [Configure MCP Registry for Organizations](https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-mcp-registry)
+- [Internal MCP Registry and Allowlist Controls for VS Code Insiders](https://github.blog/changelog/2025-09-12-internal-mcp-registry-and-allowlist-controls-for-vs-code-insiders/)
