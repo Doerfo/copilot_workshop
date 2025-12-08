@@ -191,35 +191,18 @@ handoffs:
 | Implementation → Review | Complete code, then switch to review agent |
 | Write Failing Tests → Make Tests Pass | Generate failing tests, then implement code |
 
-### `mcp-servers` (Org/Enterprise only)
-
-Configure MCP servers directly in the agent profile (only for organization or enterprise-level agents).
-
-```yaml
-mcp-servers:
-  custom-mcp:
-    type: 'local'
-    command: 'some-command'
-    args: ['--arg1', '--arg2']
-    tools: ["*"]
-    env:
-      ENV_VAR_NAME: ${{ secrets.MY_SECRET }}
-```
-
 ---
 
-## Agent vs Instructions Comparison
+## Agent vs Prompts Comparison
 
-| Aspect | Instructions | Custom Agents |
-|--------|-------------|---------------|
-| **File Extension** | `.md` / `.instructions.md` | `.agent.md` |
-| **Location** | `.github/copilot-instructions.md` or `.github/instructions/` | `.github/agents/` |
-| **Primary Purpose** | Coding standards & context | Specialized workflows & personas |
-| **Tool Restrictions** | ❌ No | ✅ Yes |
+| Aspect | Prompts | Custom Agents |
+|--------|---------|---------------|
+| **File Extension** | `.prompt.md` | `.agent.md` |
+| **Location** | `.github/prompts/` | `.github/agents/` |
+| **Primary Purpose** | Reusable task templates | Specialized workflows & personas |
 | **Handoffs** | ❌ No | ✅ Yes (VS Code) |
-| **Model Selection** | ❌ No | ✅ Yes (VS Code) |
-| **Triggered By** | File matching (globs) | User selection / handoff |
-| **Stacking** | Additive | Single agent active |
+| **Triggered By** | User selection from `/` menu | User selection / handoff |
+| **Variables** | ✅ Yes (`${variable}`) | ❌ No |
 
 ---
 
