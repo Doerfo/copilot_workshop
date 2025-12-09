@@ -22,5 +22,4 @@ This workshop is designed to help you master advanced GitHub Copilot features th
   - Prompt customization
   - Feature development with Spec Kit
 
-- **local-docs/** – Supporting documentation and examples
 - **images/** – Visual materials and diagrams
