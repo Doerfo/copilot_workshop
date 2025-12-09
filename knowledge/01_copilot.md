@@ -34,7 +34,7 @@ GitHub Copilot supports multiple AI models, each with different strengths. Selec
 ## Custom Models (BYOK - Bring Your Own Key)
 
 GitHub Copilot allows you to configure **custom models** from external providers like Azure OpenAI, Anthropic, or Google Cloud. This enables enterprise scenarios where you need specific model versions, data residency, or cost control.
-
+asdasdas
 ![Enable Custom models](../images/enable_custom_models.png)
 
 ### Configuring Custom Models in VS Code
@@ -76,7 +76,7 @@ GitHub Copilot allows you to configure **custom models** from external providers
 While GitHub Copilot Code Review is designed for GitHub Pull Requests, you can leverage the **GitHub Copilot CLI** and **API** to integrate AI-powered code review into GitLab CI/CD pipelines.
 
 ### Architecture Overview
-
+dfgdfgdfg
 ```mermaid
 flowchart LR
     subgraph GitLab["GitLab CI/CD"]
