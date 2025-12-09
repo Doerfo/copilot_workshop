@@ -4,10 +4,6 @@
 
 **Prompt Engineering** is the practice of crafting effective requests to get better results from GitHub Copilot. A prompt includes your question or code snippet, plus any context Copilot uses (current file, chat history, etc.).
 
-### How Copilot Composes Your Prompt
-
-![Prompt Composition](../images/prompt_composition.png)
-
 ## Core Strategies
 
 | Strategy | Description |
